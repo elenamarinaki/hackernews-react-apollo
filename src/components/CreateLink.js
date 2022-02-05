@@ -35,6 +35,9 @@ export const CreateLink = () => {
         onSubmit={(e) => {
           e.preventDefault()
           createLink()
+          //   log
+          console.log("createLink is: ", createLink())
+          console.log("formState is: ", formState)
         }}
       >
         <div className='flex flex-column mt3'>
