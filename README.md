@@ -28,3 +28,27 @@
 - `schema.graphql` -> **Application schema**. It defines the GraphQL operations we can send from the frontend
 - `resolvers` -> contains the resolver functions for the operations that we define in the application schema
 - `index.js` -> entry point for the `GraphQL` server
+
+## To be able to store into the db ...
+
+- in the `GraphQL` playground, we have to sign-up!
+
+```javascript
+mutation SignUp {
+    signup(
+        email: ""
+        password: ""
+        name: ""
+    ) {
+        token
+    }
+}
+```
+
+- then pass the given token into the HTTP header at the bottom:
+
+```javascript
+{
+    "authorization": "Bearer <paste token here>"
+}
+```
