@@ -1,25 +1,34 @@
 import React from "react"
+import { gql, useQuery } from "@apollo/client"
 import { Link } from "./Link"
 
-const linksToRender = [
+const FEED_QUERY = gql`
   {
-    id: "link-id-1",
-    description: "Prisma gives you a powerful database toolkit 😎",
-    url: "https://prisma.io",
-  },
-  {
-    id: "link-id-2",
-    description: "The best GraphQL client",
-    url: "https://www.apollographql.com/docs/react/",
-  },
-]
+    feed {
+      id
+      links {
+        id
+        createdAt
+        url
+        description
+      }
+    }
+  }
+`
 
 export const LinkList = () => {
+  const { data } = useQuery(FEED_QUERY)
+  // log
+  console.log("data is: ", data)
   return (
     <div>
-      {linksToRender.map((link) => (
-        <Link key={link.id} link={link} />
-      ))}
+      {data && (
+        <>
+          {data.feed.links.map((link) => (
+            <Link key={link.id} link={link} />
+          ))}
+        </>
+      )}
     </div>
   )
 }
