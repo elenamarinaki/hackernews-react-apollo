@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import "./styles/index.css"
 import App from "./components/App"
-// import cors from "cors"
+import { setContext } from "@apollo/client/link/context"
 
 // 1️⃣ dependencies to wire up the apollo client
 import {
@@ -12,14 +12,20 @@ import {
   InMemoryCache,
 } from "@apollo/client"
 
-// const cors = require("cors")
+/**
+ * 5️⃣ Pass the authorization header to every HTTP request
+ * by creating an authLink variable
+ */
 
-// var corsOptions = {
-//   origin: "http://localhost:3000",
-//   credentials: true, // <-- REQUIRED backend setting
-// }
-
-// App.use(cors(corsOptions))
+const authLink = setContext((_, { headers }) => {
+  // Create a token variable pasting the token without the "Bearer" part you got from the Playground when creating your user
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTY0NDEwNzA5Mn0.DVonHuXQYlqVgtexhYCZwqiOBzUhj1iFb7aKFWG5dCQ"
+  // Return the headers to the context so httpLink can read them
+  return {
+    headers: { ...headers, authorization: token ? `Bearer ${token}` : "" },
+  }
+})
 
 /** 2️⃣
  * this will connect our ApolloClient with the GraphQL API
@@ -27,11 +33,16 @@ import {
  */
 const httpLink = createHttpLink({
   uri: "http://localhost:4000",
-  credentials: "include",
 })
 
 // 3️⃣ instantiating apollo
-const client = new ApolloClient({ link: httpLink, cache: new InMemoryCache() })
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+  headers: {
+    authorization: localStorage.getItem("token"),
+  },
+})
 
 // 4️⃣ the App is wrapped with the higher-order component
 ReactDOM.render(

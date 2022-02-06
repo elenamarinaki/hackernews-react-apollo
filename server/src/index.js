@@ -73,6 +73,4 @@ const server = new ApolloServer({
   },
 })
 
-// server.applyMiddleware({ cors: false })
-
 server.listen().then(({ url }) => console.log(`Server is running on ${url}`))

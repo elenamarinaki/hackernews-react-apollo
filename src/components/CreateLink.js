@@ -24,8 +24,9 @@ export const CreateLink = () => {
    */
   const [createLink] = useMutation(CREATE_LINK_MUTATION, {
     variables: {
+      id: "678234",
       description: formState.description,
-      ulr: formState.url,
+      url: formState.url,
     },
   })
 
