@@ -4,6 +4,8 @@ import "./styles/index.css"
 import App from "./components/App"
 import { setContext } from "@apollo/client/link/context"
 
+import { BrowserRouter } from "react-router-dom"
+
 // 1️⃣ dependencies to wire up the apollo client
 import {
   ApolloProvider,
@@ -46,8 +48,10 @@ const client = new ApolloClient({
 
 // 4️⃣ the App is wrapped with the higher-order component
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <BrowserRouter>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 )
