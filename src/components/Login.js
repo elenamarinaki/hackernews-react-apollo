@@ -40,6 +40,27 @@ export const Login = () => {
           placeholder='Your password'
         />
       </div>
+      <div className='flex mt3'>
+        <button
+          className='pointer mr2 button'
+          onClick={() => console.log("onClick")}
+        >
+          {formState.login ? "login" : "create account"}
+        </button>
+        <button
+          className='pointer button'
+          onClick={(e) =>
+            setFormState({
+              ...formState,
+              login: !formState.login,
+            })
+          }
+        >
+          {formState.login
+            ? "need to create an account?"
+            : "already have an account?"}
+        </button>
+      </div>
     </div>
   )
 }
