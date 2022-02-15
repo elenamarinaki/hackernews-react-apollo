@@ -1,5 +1,14 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { gql } from "@apollo/client"
+
+const SIGNUP_MUTATION = gql`
+  mutation SignupMutation($email: String!, $password: String!, $name: String!) {
+    signup(email: $email, password: $password, name: $name) {
+      token
+    }
+  }
+`
 
 export const Login = () => {
   const navigate = useNavigate()
