@@ -10,6 +10,10 @@ const { APP_SECRET } = require("../utils")
  * we are extracting the userId from the context object of the request
  * the POSTEDBY relation ensures we connect the userId with the Link that's created
  *
+ * when we create posts without having logged in, the Authorization header is not
+ * provided, so the usedId does not exist
+ * POSTEDBY will also be undefined & will be ignored by Prisma
+ *
  */
 async function post(parent, args, context, info) {
   const { userId } = context
