@@ -13,16 +13,21 @@ import {
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client"
+import { AUTH_TOKEN } from "./constants"
 
 /**
  * 5️⃣ Pass the authorization header to every HTTP request
  * by creating an authLink variable
+ *
+ * this middleware will be invoked every time ApolloClient sends a request to the server!
+ * Apollo Links allow us to create middlewares that modify our requests before they are send to the server
  */
 
 const authLink = setContext((_, { headers }) => {
   // Create a token variable pasting the token without the "Bearer" part you got from the Playground when creating your user
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTY0NDEwNzA5Mn0.DVonHuXQYlqVgtexhYCZwqiOBzUhj1iFb7aKFWG5dCQ"
+  const token = localStorage.getItem(AUTH_TOKEN)
+  // const token =
+  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTY0NDEwNzA5Mn0.DVonHuXQYlqVgtexhYCZwqiOBzUhj1iFb7aKFWG5dCQ"
   // Return the headers to the context so httpLink can read them
   return {
     headers: { ...headers, authorization: token ? `Bearer ${token}` : "" },

@@ -17,7 +17,7 @@ const LOGIN_MUTATION = gql`
   ) {
     login(
       email: $email,
-      password: $$password
+      password: $password
     ) {
       token
     }
