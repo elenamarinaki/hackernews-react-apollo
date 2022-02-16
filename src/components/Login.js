@@ -33,6 +33,11 @@ export const Login = () => {
   })
 
   const navigate = useNavigate()
+  /**
+   * we are using the uswMutation hook to call the definitions above
+   * this way we can pass our own variables in the mutations and
+   * decide what happens on completion of the even (after the mutation has happened)
+   */
   const [login] = useMutation(LOGIN_MUTATION, {
     variables: {
       email: formState.email,
@@ -40,6 +45,18 @@ export const Login = () => {
     },
     onCompleted: ({ login }) => {
       localStorage.setItem(AUTH_TOKEN, login.token)
+      navigate("/")
+    },
+  })
+
+  const [signup] = useMutation(SIGNUP_MUTATION, {
+    variables: {
+      name: formState.name,
+      email: formState.email,
+      password: formState.password,
+    },
+    onCompleted: ({ signup }) => {
+      localStorage.setItem(AUTH_TOKEN, signup.token)
       navigate("/")
     },
   })
